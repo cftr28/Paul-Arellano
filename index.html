@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Invitación Daphne & Daniel</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-sobre: #4a3424; 
+            --color-sobre-oscuro: #3d2a1d;
+            --color-solapa: #5c4434;
+            --dorado-brillante: #e5cf9e;
+            --dorado-oscuro: #b8955a;
+            --fondo: #f5f2ed;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            height: -webkit-fill-available;
+            font-family: 'Georgia', serif;
+            background-color: var(--fondo);
+            overflow: hidden;
+            position: fixed;
+        }
+
+        .viewport-container {
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; height: calc(var(--vh, 1vh) * 100);
+            width: 100%; padding: 15px;
+        }
+
+        /* --- EL SOBRE --- */
+        .sobre-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 5 / 3.4;
+            cursor: pointer;
+            perspective: 1000px;
+            z-index: 10;
+        }
+
+        .sobre-cuerpo {
+            position: absolute;
+            bottom: 0; width: 100%; height: 100%;
+            background-color: var(--color-sobre);
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding-bottom: 25px;
+        }
+
+        .nombre-sobre {
+            color: var(--dorado-brillante);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(20px, 5.5vw, 28px);
+            text-align: center;
+            padding: 0 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .solapa {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--color-solapa);
+            clip-path: polygon(0 0, 100% 0, 50% 50%);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+            z-index: 30;
+            display: flex;
+            justify-content: center;
+            filter: drop-shadow(0 4px 5px rgba(0,0,0,0.3));
+        }
+
+        .monograma {
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: clamp(24px, 7vw, 38px);
+            letter-spacing: 8px;
+        }
+
+        .texto-guia {
+            margin-top: 25px;
+            font-size: 0.7rem;
+            color: var(--dorado-oscuro);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+        .abrir-sobre .solapa { transform: rotateX(180deg); z-index: 5; }
+
+        /* --- TARJETA INTERIOR RESPONSIVA --- */
+        #seccion-pase {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--fondo);
+            display: none; flex-direction: column; justify-content: center;
+            align-items: center; opacity: 0; transition: opacity 0.8s ease-in;
+            z-index: 100; padding: 15px;
+            overflow-y: auto; /* Permitir scroll si la pantalla es muy pequeña */
+        }
+
+        .tarjeta-detalle {
+            width: 100%; max-width: 360px; 
+            padding: clamp(20px, 5vh, 40px) 20px;
+            background: #ffffff; border-radius: 4px; text-align: center;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.1); position: relative;
+            margin: auto; /* Centrado vertical en scroll */
+        }
+
+        .tarjeta-detalle::after {
+            content: ""; position: absolute; top: 8px; bottom: 8px; left: 8px; right: 8px;
+            border: 1px solid #f0e6d6; pointer-events: none;
+        }
+
+        .tag-fiesta {
+            font-weight: bold; color: var(--dorado-oscuro);
+            letter-spacing: 1.5px; margin-bottom: 5px;
+            display: block; font-size: 0.7rem;
+        }
+
+        .boda-subtitulo { font-size: 0.7rem; letter-spacing: 2px; color: #a18a68; text-transform: uppercase; margin-top: 8px; }
+        
+        .boda-titulo { 
+            font-size: clamp(1.8rem, 8vw, 2.2rem); 
+            color: var(--color-sobre); 
+            margin: 10px 0; 
+        }
+        
+        .caja-invitado {
+            background-color: #fcfaf8; 
+            padding: 15px 10px; 
+            margin: 15px 0;
+            border-top: 1px solid #f0e6d6; border-bottom: 1px solid #f0e6d6;
+        }
+
+        .pases-n { color: var(--color-sobre); font-size: 0.85rem; margin-top: 5px; letter-spacing: 1px; }
+        
+        .info-evento { font-size: 0.85rem; line-height: 1.4; color: #555; }
+        
+        .bloque-info { margin-bottom: 12px; }
+        
+        .nota-final { 
+            margin-top: 20px; 
+            font-size: 0.6rem; 
+            color: #bbb; 
+            text-transform: uppercase; 
+            letter-spacing: 1.2px; 
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="seccion-sobre" class="viewport-container">
+        <div class="sobre-wrapper" id="sobre" onclick="ejecutarApertura()">
+            <div class="solapa">
+                <div class="monograma">DD</div>
+            </div>
+            <div class="sobre-cuerpo">
+                <div class="nombre-sobre">Paul Arellano</div>
+            </div>
+        </div>
+        <div class="texto-guia" onclick="ejecutarApertura()">Toca para abrir invitación</div>
+    </div>
+
+    <div id="seccion-pase">
+        <div class="tarjeta-detalle">
+            <span class="tag-fiesta">SÁBADO · 08 · AGOSTO · 2026</span>
+            <div class="boda-subtitulo">Invitación</div>
+            <div class="boda-titulo">Daphne & Daniel</div>
+            
+            <div class="caja-invitado">
+                <div style="font-size: 1.1rem; font-weight: bold; color: #333;">Paul Arellano</div>
+                <div class="pases-n">VÁLIDO POR 1 PASE</div>
+            </div>
+
+            <div class="info-evento">
+                <div class="bloque-info">
+                    <strong>Ceremonia</strong><br>
+                    Casa San Juan, Cumbayá<br>
+                    Quito, Ecuador<br>
+                    17:00 hs
+                </div>
+                
+                <div class="bloque-info">
+                    <strong>Fiesta</strong><br>
+                    Casa San Juan, Cumbayá<br>
+                    Quito, Ecuador<br>
+                    19:30 hs
+                </div>
+            </div>
+
+            <p class="nota-final">Favor presentar este pase al ingresar</p>
+        </div>
+    </div>
+
+    <script>
+        // Manejo preciso del alto en móviles (iOS/Android)
+        function ajustarAltura() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', ajustarAltura);
+        window.addEventListener('orientationchange', ajustarAltura);
+        ajustarAltura();
+
+        let abierta = false;
+        function ejecutarApertura() {
+            if (abierta) return;
+            abierta = true;
+            document.getElementById('sobre').classList.add('abrir-sobre');
+            
+            // Haptic feedback simple si el navegador lo soporta
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(50);
+            }
+
+            setTimeout(() => {
+                document.getElementById('seccion-sobre').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('seccion-sobre').style.display = 'none';
+                    const pase = document.getElementById('seccion-pase');
+                    pase.style.display = 'flex';
+                    requestAnimationFrame(() => { 
+                        pase.style.opacity = '1'; 
+                    });
+                }, 600);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
